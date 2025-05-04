@@ -1,6 +1,7 @@
-package models
+package user
 
 import (
+	"fmt"
 	"time"
 
 	"golang.org/x/crypto/bcrypt"
@@ -14,11 +15,14 @@ type User struct {
 	DeletedAt gorm.DeletedAt `json:"deleted_at,omitempty" gorm:"index"`
 	Name      string         `json:"name" gorm:"not null"`
 	Email     string         `json:"email" gorm:"unique;not null"`
-	Password  string         `json:"-" gorm:"not null"` // Password is never sent in JSON
+	Password  string         `json:"-" gorm:"not null"`
 }
 
 // BeforeCreate is a GORM hook that hashes the password before saving
 func (u *User) BeforeCreate(tx *gorm.DB) error {
+	if u.Password == "" {
+		return fmt.Errorf("password is required")
+	}
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
 	if err != nil {
 		return err

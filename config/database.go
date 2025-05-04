@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"Go_API/models"
+	"Go_API/internal/domain/user"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -57,7 +57,7 @@ func InitDB() {
 	}
 
 	// Auto Migrate the schema
-	err = DB.AutoMigrate(&models.User{})
+	err = DB.AutoMigrate(&user.User{})
 	if err != nil {
 		log.Fatal("Failed to migrate database:", err)
 	}
