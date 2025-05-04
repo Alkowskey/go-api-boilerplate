@@ -6,7 +6,6 @@ import (
 	"strconv"
 
 	"Go_API/internal/auth"
-	"Go_API/internal/domain/user"
 	"Go_API/internal/domain/user/usecase"
 
 	"github.com/gorilla/mux"
@@ -68,8 +67,7 @@ type loginRequest struct {
 }
 
 type loginResponse struct {
-	User  *user.User `json:"user"`
-	Token string     `json:"token"`
+	Token string `json:"token"`
 }
 
 func (h *UserHandler) Login(w http.ResponseWriter, r *http.Request) {
@@ -97,7 +95,6 @@ func (h *UserHandler) Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	response := loginResponse{
-		User:  output.User,
 		Token: token,
 	}
 

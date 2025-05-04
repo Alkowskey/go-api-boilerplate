@@ -6,6 +6,10 @@ import (
 	"strings"
 )
 
+type contextKey string
+
+const userIDKey contextKey = "user_id"
+
 func AuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		authHeader := r.Header.Get("Authorization")
@@ -36,7 +40,7 @@ func AuthMiddleware(next http.Handler) http.Handler {
 
 		// Add the user ID to the request context
 		ctx := r.Context()
-		ctx = context.WithValue(ctx, "user_id", claims.UserID)
+		ctx = context.WithValue(ctx, userIDKey, claims.UserID)
 		r = r.WithContext(ctx)
 
 		next.ServeHTTP(w, r)

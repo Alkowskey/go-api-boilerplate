@@ -18,7 +18,7 @@ type AuthenticateInput struct {
 }
 
 type AuthenticateOutput struct {
-	User *user.User
+	User *user.SafeUser
 	Err  error
 }
 
@@ -34,7 +34,5 @@ func (uc *AuthenticateUseCase) Execute(input AuthenticateInput) AuthenticateOutp
 		return AuthenticateOutput{Err: ErrInvalidCredentials}
 	}
 
-	// Clear password before returning
-	user.Password = ""
-	return AuthenticateOutput{User: user}
+	return AuthenticateOutput{User: user.ToSafeUser()}
 }

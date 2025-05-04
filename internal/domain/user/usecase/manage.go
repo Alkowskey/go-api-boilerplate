@@ -17,7 +17,7 @@ type GetUserInput struct {
 }
 
 type GetUserOutput struct {
-	User *user.User
+	User *user.SafeUser
 	Err  error
 }
 
@@ -26,8 +26,7 @@ func (uc *GetUserUseCase) Execute(input GetUserInput) GetUserOutput {
 	if err != nil {
 		return GetUserOutput{Err: ErrUserNotFound}
 	}
-	user.Password = ""
-	return GetUserOutput{User: user}
+	return GetUserOutput{User: user.ToSafeUser()}
 }
 
 type ListUsersUseCase struct {
@@ -39,7 +38,7 @@ func NewListUsersUseCase(repo user.Repository) *ListUsersUseCase {
 }
 
 type ListUsersOutput struct {
-	Users []user.User
+	Users []*user.SafeUser
 	Err   error
 }
 
@@ -48,9 +47,10 @@ func (uc *ListUsersUseCase) Execute() ListUsersOutput {
 	if err != nil {
 		return ListUsersOutput{Err: err}
 	}
-	// Clear passwords
-	for i := range users {
-		users[i].Password = ""
+
+	safeUsers := make([]*user.SafeUser, len(users))
+	for i, user := range users {
+		safeUsers[i] = user.ToSafeUser()
 	}
-	return ListUsersOutput{Users: users}
+	return ListUsersOutput{Users: safeUsers}
 }

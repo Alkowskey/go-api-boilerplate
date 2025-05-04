@@ -18,6 +18,15 @@ type User struct {
 	Password  string         `json:"-" gorm:"not null"`
 }
 
+type SafeUser struct {
+	ID        uint           `json:"id"`
+	CreatedAt time.Time      `json:"created_at"`
+	UpdatedAt time.Time      `json:"updated_at"`
+	DeletedAt gorm.DeletedAt `json:"deleted_at,omitempty"`
+	Name      string         `json:"name"`
+	Email     string         `json:"email"`
+}
+
 // BeforeCreate is a GORM hook that hashes the password before saving
 func (u *User) BeforeCreate(tx *gorm.DB) error {
 	if u.Password == "" {
@@ -35,4 +44,15 @@ func (u *User) BeforeCreate(tx *gorm.DB) error {
 func (u *User) CheckPassword(password string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
 	return err == nil
+}
+
+func (u *User) ToSafeUser() *SafeUser {
+	return &SafeUser{
+		ID:        u.ID,
+		CreatedAt: u.CreatedAt,
+		UpdatedAt: u.UpdatedAt,
+		DeletedAt: u.DeletedAt,
+		Name:      u.Name,
+		Email:     u.Email,
+	}
 }

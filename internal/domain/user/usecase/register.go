@@ -21,7 +21,7 @@ type RegisterInput struct {
 }
 
 type RegisterOutput struct {
-	User *user.User
+	User *user.SafeUser
 	Err  error
 }
 
@@ -52,7 +52,5 @@ func (uc *RegisterUseCase) Execute(input RegisterInput) RegisterOutput {
 		return RegisterOutput{Err: err}
 	}
 
-	// Clear password before returning
-	user.Password = ""
-	return RegisterOutput{User: user}
+	return RegisterOutput{User: user.ToSafeUser()}
 }
