@@ -1,11 +1,12 @@
 package main
 
 import (
-	"Go_API/config"
-	"Go_API/internal/infrastructure/router"
 	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/aleksander/Go_API/config"
+	"github.com/aleksander/Go_API/internal/infrastructure/router"
 )
 
 func main() {

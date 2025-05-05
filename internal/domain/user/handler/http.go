@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"Go_API/internal/auth"
-	"Go_API/internal/domain/user/usecase"
+	"github.com/aleksander/Go_API/internal/auth"
+	"github.com/aleksander/Go_API/internal/domain/user/usecase"
 
 	"github.com/gorilla/mux"
 )

@@ -1,9 +1,10 @@
-module Go_API
+module github.com/aleksander/Go_API
 
 go 1.23
 
 require (
 	github.com/golang-jwt/jwt/v5 v5.2.1
+	github.com/google/uuid v1.6.0
 	github.com/gorilla/mux v1.8.1
 	golang.org/x/crypto v0.14.0
 	gorm.io/driver/postgres v1.5.7

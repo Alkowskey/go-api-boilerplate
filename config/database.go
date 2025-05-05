@@ -5,8 +5,7 @@ import (
 	"log"
 	"os"
 
-	"Go_API/internal/domain/user"
-
+	"github.com/aleksander/Go_API/config/migrations"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -56,9 +55,8 @@ func InitDB() {
 		log.Fatal("Failed to connect to database:", err)
 	}
 
-	// Auto Migrate the schema
-	err = DB.AutoMigrate(&user.User{})
-	if err != nil {
+	// Run migrations
+	if err := migrations.RunMigrations(DB); err != nil {
 		log.Fatal("Failed to migrate database:", err)
 	}
 

@@ -3,7 +3,7 @@ package usecase
 import (
 	"strings"
 
-	"Go_API/internal/domain/user"
+	user "github.com/aleksander/Go_API/internal/domain/user/models"
 )
 
 type RegisterUseCase struct {

@@ -1,8 +1,6 @@
 package usecase
 
-import (
-	"Go_API/internal/domain/user"
-)
+import user "github.com/aleksander/Go_API/internal/domain/user/models"
 
 type AuthenticateUseCase struct {
 	repo user.Repository

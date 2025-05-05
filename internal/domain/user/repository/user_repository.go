@@ -1,8 +1,7 @@
 package repository
 
 import (
-	"Go_API/internal/domain/user"
-
+	user "github.com/aleksander/Go_API/internal/domain/user/models"
 	"gorm.io/gorm"
 )
 
