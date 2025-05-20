@@ -3,6 +3,7 @@ package migrations
 import (
 	"gorm.io/gorm"
 
+	acceleration "github.com/aleksander/Go_API/internal/domain/acceleration/models"
 	device "github.com/aleksander/Go_API/internal/domain/device/models"
 	user "github.com/aleksander/Go_API/internal/domain/user/models"
 )
@@ -11,6 +12,7 @@ import (
 var Migrations = []interface{}{
 	&user.User{},
 	&device.Device{},
+	&acceleration.Acceleration{},
 }
 
 // RunMigrations executes all database migrations

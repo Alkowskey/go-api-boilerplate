@@ -21,7 +21,7 @@ type RegisterInput struct {
 }
 
 type RegisterOutput struct {
-	User *user.SafeUser
+	User *user.UserResponse
 	Err  error
 }
 
@@ -52,5 +52,5 @@ func (uc *RegisterUseCase) Execute(input RegisterInput) RegisterOutput {
 		return RegisterOutput{Err: err}
 	}
 
-	return RegisterOutput{User: user.ToSafeUser()}
+	return RegisterOutput{User: user.ToResponse()}
 }

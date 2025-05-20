@@ -18,7 +18,7 @@ type User struct {
 	Password  string         `json:"-" gorm:"not null"`
 }
 
-type SafeUser struct {
+type UserResponse struct {
 	ID        uint           `json:"id"`
 	CreatedAt time.Time      `json:"created_at"`
 	UpdatedAt time.Time      `json:"updated_at"`
@@ -46,8 +46,8 @@ func (u *User) CheckPassword(password string) bool {
 	return err == nil
 }
 
-func (u *User) ToSafeUser() *SafeUser {
-	return &SafeUser{
+func (u *User) ToResponse() *UserResponse {
+	return &UserResponse{
 		ID:        u.ID,
 		CreatedAt: u.CreatedAt,
 		UpdatedAt: u.UpdatedAt,

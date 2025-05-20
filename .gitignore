@@ -3,3 +3,4 @@
 .DS_Store
 /vendor/
 /go.sum 
+example_acc_data

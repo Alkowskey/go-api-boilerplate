@@ -16,7 +16,7 @@ type AuthenticateInput struct {
 }
 
 type AuthenticateOutput struct {
-	User *user.SafeUser
+	User *user.UserResponse
 	Err  error
 }
 
@@ -32,5 +32,5 @@ func (uc *AuthenticateUseCase) Execute(input AuthenticateInput) AuthenticateOutp
 		return AuthenticateOutput{Err: ErrInvalidCredentials}
 	}
 
-	return AuthenticateOutput{User: user.ToSafeUser()}
+	return AuthenticateOutput{User: user.ToResponse()}
 }

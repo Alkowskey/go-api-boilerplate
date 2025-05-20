@@ -13,7 +13,7 @@ var (
 	ErrExpiredToken = errors.New("token has expired")
 )
 
-type Claims struct {
+type JWTClaims struct {
 	UserID uint `json:"user_id"`
 	jwt.RegisteredClaims
 }
@@ -24,7 +24,7 @@ func GenerateToken(userID uint) (string, error) {
 		secretKey = []byte("your-secret-key") // Fallback for development
 	}
 
-	claims := Claims{
+	claims := JWTClaims{
 		UserID: userID,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(24 * time.Hour)),
@@ -36,13 +36,13 @@ func GenerateToken(userID uint) (string, error) {
 	return token.SignedString(secretKey)
 }
 
-func ValidateToken(tokenString string) (*Claims, error) {
+func ValidateToken(tokenString string) (*JWTClaims, error) {
 	secretKey := []byte(os.Getenv("JWT_SECRET"))
 	if len(secretKey) == 0 {
 		secretKey = []byte("your-secret-key") // Fallback for development
 	}
 
-	token, err := jwt.ParseWithClaims(tokenString, &Claims{}, func(token *jwt.Token) (interface{}, error) {
+	token, err := jwt.ParseWithClaims(tokenString, &JWTClaims{}, func(token *jwt.Token) (interface{}, error) {
 		return secretKey, nil
 	})
 
@@ -53,7 +53,7 @@ func ValidateToken(tokenString string) (*Claims, error) {
 		return nil, ErrInvalidToken
 	}
 
-	if claims, ok := token.Claims.(*Claims); ok && token.Valid {
+	if claims, ok := token.Claims.(*JWTClaims); ok && token.Valid {
 		return claims, nil
 	}
 

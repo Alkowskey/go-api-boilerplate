@@ -15,7 +15,7 @@ type GetUserInput struct {
 }
 
 type GetUserOutput struct {
-	User *user.SafeUser
+	User *user.UserResponse
 	Err  error
 }
 
@@ -24,7 +24,7 @@ func (uc *GetUserUseCase) Execute(input GetUserInput) GetUserOutput {
 	if err != nil {
 		return GetUserOutput{Err: ErrUserNotFound}
 	}
-	return GetUserOutput{User: user.ToSafeUser()}
+	return GetUserOutput{User: user.ToResponse()}
 }
 
 type ListUsersUseCase struct {
@@ -36,7 +36,7 @@ func NewListUsersUseCase(repo user.Repository) *ListUsersUseCase {
 }
 
 type ListUsersOutput struct {
-	Users []*user.SafeUser
+	Users []*user.UserResponse
 	Err   error
 }
 
@@ -46,9 +46,9 @@ func (uc *ListUsersUseCase) Execute() ListUsersOutput {
 		return ListUsersOutput{Err: err}
 	}
 
-	safeUsers := make([]*user.SafeUser, len(users))
+	safeUsers := make([]*user.UserResponse, len(users))
 	for i, user := range users {
-		safeUsers[i] = user.ToSafeUser()
+		safeUsers[i] = user.ToResponse()
 	}
 	return ListUsersOutput{Users: safeUsers}
 }
